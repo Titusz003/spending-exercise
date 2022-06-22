@@ -1,20 +1,15 @@
-const express = require("express");
-const cors = require("cors");
-const bodyParser = require("body-parser");
+import { spendingsController } from "./controllers/spendingsController.js";
+import express from "express";
+import cors from "cors";
+import bodyParser from "body-parser";
 
 const app = express();
 app.use(cors());
 app.use(bodyParser.json());
 
-app.get("/spendings", (req, res) => {
-  res.send([
-    {
-      description: "Mango",
-      amount: 1200,
-      spent_at: new Date().toISOString(),
-      currency: "USD",
-    },
-  ]);
-});
+app.get("/spendings", spendingsController.get);
+app.post("/spendings", spendingsController.post);
 
-module.exports = app;
+app.listen(5000, () => console.log("Server is running"));
+
+export default app;

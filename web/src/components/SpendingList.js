@@ -11,7 +11,12 @@ import {
   AmountWrapper,
 } from "../styles/ComponentStyles";
 
-export default function SpendingList({ spendings, setSpendings }) {
+export default function SpendingList({
+  spendings,
+  setSpendings,
+  fetchSwitch,
+  setOriginalSpendings,
+}) {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(false);
 
@@ -31,6 +36,7 @@ export default function SpendingList({ spendings, setSpendings }) {
       .then((response) => {
         if (response.status === 200) {
           setSpendings(response.body);
+          setOriginalSpendings(response.body);
         }
       })
       .catch((err) => {
@@ -40,7 +46,7 @@ export default function SpendingList({ spendings, setSpendings }) {
       .finally(() => {
         setLoading(false);
       });
-  }, []);
+  }, [fetchSwitch]);
 
   if (loading) return <Loader />;
 
